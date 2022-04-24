@@ -39,8 +39,9 @@ def handle_client(c):
             if commands[0].upper() == "PING":
                 c.send(b"+PONG\r\n")
             elif commands[0].upper() == "ECHO":
-                print("echo", commands[1])
-                c.send(commands[1].encode())
+                print("echo:", commands[1])
+                output = f"${len(commands[1])}\r\n{commands[1]}\r\n"
+                c.send(output.encode())
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
     print("Logs from your program will appear here!")
@@ -63,9 +64,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
-    #items = parse_command(b"*2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n")
-    #print(items)
-    #items = parse_command(b'*2\r\n$4\r\necho\r\n$11\r\nwatermelons\r\n')
-    #print(items)
+    #main()
+    items = parse_command(b"*2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n")
+    print(items)
+    items = parse_command(b'*2\r\n$4\r\necho\r\n$11\r\nwatermelons\r\n')
+    print(items)
 
