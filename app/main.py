@@ -17,7 +17,7 @@ def parse_command(command):
             item = command[0:string_length+2]
             items.append(item)
 
-            command[string_length:]
+            command[string_length+2:]
     return items 
 
 def handle_client(c):
