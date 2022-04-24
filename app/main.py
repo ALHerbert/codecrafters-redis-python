@@ -64,9 +64,9 @@ def main():
 
 
 if __name__ == "__main__":
-    #main()
-    items = parse_command(b"*2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n")
-    print(items)
-    items = parse_command(b'*2\r\n$4\r\necho\r\n$11\r\nwatermelons\r\n')
-    print(items)
+    main()
+    #items = parse_command(b"*2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n")
+    #print(items)
+    #items = parse_command(b'*2\r\n$4\r\necho\r\n$11\r\nwatermelons\r\n')
+    #print(items)
 
