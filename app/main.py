@@ -4,7 +4,7 @@ def parse_command(command):
     command = command.decode()
 
     if command[0] == '*':
-        array_length = command[1] 
+        array_length = int(command[1])
         command = command[4:]
 
     items = []
