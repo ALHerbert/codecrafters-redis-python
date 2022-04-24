@@ -11,13 +11,16 @@ def parse_command(command):
 
     for i in range(array_length):
         if command[0] == '$':
-            string_length = int(command[1])
+            string_length = command[1]
+            if command[2] != '\r':
+                string_length += command[2]
+                command = command[1:]
             command = command[4:]
 
-            item = command[0:string_length]
+            item = command[0:int(string_length)]
             items.append(item)
 
-            command = command[string_length+2:]
+            command = command[int(string_length)+2:]
     return items 
 
 def handle_client(c):
@@ -62,5 +65,7 @@ def main():
 if __name__ == "__main__":
     main()
     #items = parse_command(b"*2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n")
+    #print(items)
+    #items = parse_command(b'*2\r\n$4\r\necho\r\n$11\r\nwatermelons\r\n')
     #print(items)
 
