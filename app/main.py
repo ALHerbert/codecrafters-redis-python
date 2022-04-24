@@ -8,6 +8,8 @@ def main():
     s = socket.create_server(("localhost", 6379), reuse_port=True)
     s.accept() # wait for client
 
+    s.sendall("+PONG\r\n")
+
 
 if __name__ == "__main__":
     main()
