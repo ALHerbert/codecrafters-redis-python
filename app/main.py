@@ -14,7 +14,7 @@ def parse_command(command):
             string_length = int(command[1])
             command = command[4:]
 
-            item = command[0:string_length+2]
+            item = command[0:string_length]
             items.append(item)
 
             command[string_length+2:]
