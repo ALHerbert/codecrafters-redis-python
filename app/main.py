@@ -1,10 +1,33 @@
 from _thread import start_new_thread
 
+def parse_command(command):
+    command = command.decode()
+
+    if command[0] == '*':
+        array_length = command[1] 
+        command = command[4:]
+
+    items = []
+
+    for i in range(array_length):
+        if command[0] == '$':
+            string_length = int(command[1])
+            command = command[4:]
+
+            item = command[0:string_length+2]
+            items.append(item)
+
+            command[string_length:]
+    return items 
+
 def handle_client(c):
+    #b'*1\r\n$4\r\nping\r\n' ping
+    #b'*2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n"
     with c:
         while True:
             data = c.recv(1024)
             print("data", data)
+            print("items", parse_command(data))
             if not data:
                 break
             c.send(b"+PONG\r\n")
