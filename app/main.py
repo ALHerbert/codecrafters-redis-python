@@ -16,7 +16,7 @@ def main():
             break
         s.sendall("+PONG\r\n")
     '''
-    c.send("+PONG\r\n")
+    c.send(b"+PONG\r\n")
 
 if __name__ == "__main__":
     main()
