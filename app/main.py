@@ -47,7 +47,7 @@ def handle_client(c):
                 c.send(output.encode())
             elif commands[0].upper() == "SET":
                 expiry = None
-                if len(commands) > 3 and commands[3].upper() == "EX":
+                if len(commands) > 3 and commands[3].upper() == "PX":
                     expiry = datetime.now() + timedelata(milliseconds=commands[4])
 
                 data_store[commands[1]] = {'value': commands[2], 'expiry': expiry}
