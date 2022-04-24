@@ -55,9 +55,9 @@ def handle_client(c):
             elif commands[0].upper() == "GET":
                 value = data_store[commands[1]]
                 if value["expiry"] is None:
-                    output = f"${len(value)}\r\n{value['value']}\r\n"
+                    output = f"${len(value['value'])}\r\n{value['value']}\r\n"
                 elif value["expiry"] > datetime.now(): 
-                    output = f"${len(value)}\r\n{value['value']}\r\n"
+                    output = f"${len(value['value'])}\r\n{value['value']}\r\n"
                 else:
                     data_store.pop(commands[1])
                     output = "$-1\r\n"
