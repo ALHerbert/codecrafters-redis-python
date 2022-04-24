@@ -1,5 +1,7 @@
 from _thread import start_new_thread
 
+data_store = {}
+
 def parse_command(command):
     command = command.decode()
 
@@ -39,8 +41,14 @@ def handle_client(c):
             if commands[0].upper() == "PING":
                 c.send(b"+PONG\r\n")
             elif commands[0].upper() == "ECHO":
-                print("echo:", commands[1])
                 output = f"${len(commands[1])}\r\n{commands[1]}\r\n"
+                c.send(output.encode())
+            elif commands[0].upper() == "SET":
+                data_store[commands[1]] = commands[2]
+                c.send(b"+OK\r\n")
+            elif commands[0].upper() == "GET":
+                value = data_store[commands[1]]
+                output = f"${len(value)}\r\n{value}\r\n"
                 c.send(output.encode())
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
