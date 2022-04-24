@@ -17,9 +17,7 @@ def parse_command(command):
             item = command[0:string_length]
             items.append(item)
 
-            command[string_length+2:]
-        else:
-            print("the actual command is", command)
+            command = command[string_length+2:]
     return items 
 
 def handle_client(c):
@@ -29,10 +27,15 @@ def handle_client(c):
         while True:
             data = c.recv(1024)
             print("data", data)
-            print("items", parse_command(data))
+
             if not data:
                 break
-            c.send(b"+PONG\r\n")
+
+            commands = parse_command(data)
+            if commands[0].upper() == "PING":
+                c.send(b"+PONG\r\n")
+            elif commands[0].upper() == "ECHO":
+                c.send(commands[1].encode())
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
     print("Logs from your program will appear here!")
@@ -56,3 +59,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+    #items = parse_command(b"*2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n")
+    #print(items)
+
