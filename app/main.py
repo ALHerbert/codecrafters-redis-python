@@ -32,9 +32,11 @@ def handle_client(c):
                 break
 
             commands = parse_command(data)
+            print(commands)
             if commands[0].upper() == "PING":
                 c.send(b"+PONG\r\n")
             elif commands[0].upper() == "ECHO":
+                print("echo", commands[1])
                 c.send(commands[1].encode())
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
