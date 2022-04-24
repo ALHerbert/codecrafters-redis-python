@@ -20,11 +20,13 @@ def main():
     #
     import socket
     s = socket.create_server(("localhost", 6379), reuse_port=True)
+    s.listen(5)
 
     while True:
         c, addr = s.accept() # wait for client
 
         client_lock.acquire()
+        print(f"Connected to : {addr}")
         
         start_new_thread(handle_client, (c,))
 
