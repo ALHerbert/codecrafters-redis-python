@@ -18,6 +18,8 @@ def parse_command(command):
             items.append(item)
 
             command[string_length+2:]
+        else:
+            print("the actual command is", command)
     return items 
 
 def handle_client(c):
