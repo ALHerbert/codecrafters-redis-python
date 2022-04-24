@@ -39,6 +39,7 @@ def handle_client(c):
 
             commands = parse_command(data)
             print(commands)
+            print(data_store)
             if commands[0].upper() == "PING":
                 c.send(b"+PONG\r\n")
             elif commands[0].upper() == "ECHO":
