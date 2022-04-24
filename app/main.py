@@ -1,7 +1,7 @@
 from _thread import start_new_thread
 import threading
 
-client_lock = threading.Lock()
+#client_lock = threading.Lock()
 
 def handle_client(c):
     with c:
@@ -25,7 +25,7 @@ def main():
     while True:
         c, addr = s.accept() # wait for client
 
-        client_lock.acquire()
+        #client_lock.acquire()
         print(f"Connected to : {addr}")
         
         start_new_thread(handle_client, (c,))
