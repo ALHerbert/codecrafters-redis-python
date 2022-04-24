@@ -1,4 +1,5 @@
 from _thread import start_new_thread
+from datetime import datetime, timedelta
 
 data_store = {}
 
@@ -44,11 +45,21 @@ def handle_client(c):
                 output = f"${len(commands[1])}\r\n{commands[1]}\r\n"
                 c.send(output.encode())
             elif commands[0].upper() == "SET":
-                data_store[commands[1]] = commands[2]
+                expiry = None
+                if len(commands) > 3 and commands[3] == "EX":
+                    expiry = datetime.now() + timedelata(milliseconds=commands[4])
+
+                data_store[commands[1]] = {'value': commands[2], 'expiry': expiry}
                 c.send(b"+OK\r\n")
             elif commands[0].upper() == "GET":
                 value = data_store[commands[1]]
-                output = f"${len(value)}\r\n{value}\r\n"
+                if value["expiry"] is None 
+                    output = f"${len(value)}\r\n{value['value']}\r\n"
+                elif value["expiry"] > datetime.now(): 
+                    output = f"${len(value)}\r\n{value['value']}\r\n"
+                else:
+                    data_store.pop(commands[1])
+                    output = "$-1\r\n"
                 c.send(output.encode())
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
