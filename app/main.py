@@ -8,13 +8,15 @@ def main():
     s = socket.create_server(("localhost", 6379), reuse_port=True)
     s.accept() # wait for client
 
+    '''
     while True:
         data = s.recv(1024)
         print("data", data)
         if not data:
             break
         s.sendall("+PONG\r\n")
-
+    '''
+    c.send("+PONG\r\n")
 
 if __name__ == "__main__":
     main()
