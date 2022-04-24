@@ -5,7 +5,6 @@ client_lock = threading.Lock()
 
 def handle_client(c):
     with c:
-        print(f"Connected by {addr}")
         while True:
             data = c.recv(1024)
             print("data", data)
