@@ -1,10 +1,22 @@
 from _thread import start_new_thread
 from datetime import datetime, timedelta
 
-data_store = {}
 
-def parse_command(command):
-    command = command.decode()
+data_store = {} # k: str, v: MyObject
+
+class MyObject:
+    def __init__(self, value, expiry=None):
+        self.value = value
+        self.expiry = expiry
+
+# update to not mutate in incoming command?
+def parse_command(command: bytes): -> list
+    # invalid inputs
+    # something that is not bytes
+    # something that doesn't start with the correct cahracers
+    # something that doesnt have the right formatting like /r/n
+    # something where the length doesn't match teh caracetrs
+    command = command.decode() # i shouldnt modify an argument
 
     if command[0] == '*':
         array_length = int(command[1])
@@ -26,11 +38,22 @@ def parse_command(command):
             command = command[int(string_length)+2:]
     return items 
 
-def handle_client(c):
-    #b'*1\r\n$4\r\nping\r\n' ping
-    #b'*2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n"
+
+# create output builder function
+def create_output(input_datatype): -> str # or bytes
+   # simple strings, errors, integers, bulk strings, arrays 
+
+# create function that takes in data. returns binary string to respond with
+
+def handle_client(c): # put the dispatch code into its own function.
     with c:
         while True:
+            # data = c.recv(1024)
+            #if not data:
+            #    break
+            # commands = parse_command(data)
+            # output = handle_command(commands)
+            # c.send(output.encode())
             data = c.recv(1024)
             print("data", data)
 
@@ -38,8 +61,6 @@ def handle_client(c):
                 break
 
             commands = parse_command(data)
-            print(commands)
-            print(data_store)
             if commands[0].upper() == "PING":
                 c.send(b"+PONG\r\n")
             elif commands[0].upper() == "ECHO":
@@ -85,8 +106,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    #items = parse_command(b"*2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n")
-    #print(items)
-    #items = parse_command(b'*2\r\n$4\r\necho\r\n$11\r\nwatermelons\r\n')
-    #print(items)
 
